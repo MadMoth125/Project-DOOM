@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class GunParameters : ScriptableObject
+public class GunParameters_SO : ScriptableObject
 {
 	public event Action OnGunFired;
 	
