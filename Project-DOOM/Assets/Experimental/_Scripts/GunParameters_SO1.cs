@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Attempt1
+namespace Attempt2
 {
 	[CreateAssetMenu]
-    public class GunParameters_SO : ScriptableObject
+    public class GunParameters_SO1 : ScriptableObject
     {
     	public event Action OnGunFired;
     	

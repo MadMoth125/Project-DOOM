@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: New Gun Parameters
   m_EditorClassIdentifier: 
   <TriggerMethod>k__BackingField: 0
-  <ProjectileMethod>k__BackingField: 0
+  <ProjectileMethod>k__BackingField: 1
