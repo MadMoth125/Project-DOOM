@@ -57,14 +57,14 @@ namespace Attempt2
 		private bool CheckConditionals([CanBeNull] bool[] conditions)
 		{
 			if (conditions == null || conditions.Length == 0) return true;
-			
-			bool result = true;
+
 			foreach (bool condition in conditions)
 			{
-				result &= condition;
+				// result &= condition; old implementation
+				if (!condition) return false; // if any condition is false, early return false
 			}
-	
-			return result;
+			
+			return true; // if loop completes, all conditions must be true
 		}
 	}
 	
