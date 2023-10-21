@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class WeaponAnimationEventHandler : MonoBehaviour
 {
+	public void DisableWeapon()
+	{
+		Debug.Log("Weapon Disabled");
+	}
+	
+	public void EnableWeapon()
+	{
+		Debug.Log("Weapon Enabled");
+	}
+	
 	private void OnEnable()
 	{
 		
@@ -17,7 +27,7 @@ public class WeaponAnimationEventHandler : MonoBehaviour
 
 	private void Start()
 	{
-		
+
 	}
 
 	private void Update()

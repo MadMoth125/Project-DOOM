@@ -61,10 +61,12 @@ namespace Attempt2
 			foreach (bool condition in conditions)
 			{
 				// result &= condition; old implementation
-				if (!condition) return false; // if any condition is false, early return false
+				// if any condition is false, early return false
+				if (!condition) return false;
 			}
 			
-			return true; // if loop completes, all conditions must be true
+			// if loop completes, all conditions must be true
+			return true;
 		}
 	}
 	
