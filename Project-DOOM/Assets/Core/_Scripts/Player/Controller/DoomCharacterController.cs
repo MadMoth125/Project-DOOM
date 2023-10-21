@@ -60,13 +60,19 @@ public class DoomCharacterController : MonoBehaviour , ICharacterController
 	
 	public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
 	{
-		if (_lookInputVector != Vector3.zero && orientationSharpness > 0f)
+		if (_lookInputVector == Vector3.zero) return;
+		
+		if (orientationSharpness > 0f)
 		{
 			// Smoothly interpolate from current to target look direction
 			Vector3 smoothedLookInputDirection = Vector3.Slerp(_motor.CharacterForward, _lookInputVector, 1 - Mathf.Exp(-orientationSharpness * deltaTime)).normalized;
 
 			// Set the current rotation (which will be used by the KinematicCharacterMotor)
 			currentRotation = Quaternion.LookRotation(smoothedLookInputDirection, _motor.CharacterUp);
+		}
+		else
+		{
+			currentRotation = Quaternion.LookRotation(_lookInputVector, _motor.CharacterUp);
 		}
 	}
 

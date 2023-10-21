@@ -13,11 +13,12 @@ public class DoomPlayerManager : MonoBehaviour
 	
 	public DoomCharacterController characterController;
 	public DoomCameraController cameraController;
-	
 	private CameraHeadBob _cameraHeadBob;
 	
 	[Space(10)]
+	[Header("Camera Parameters")]
 	public Transform cameraTarget;
+	public float cameraBobbingStrength = 0.1f;
 	
 	private void Awake()
 	{
@@ -50,9 +51,9 @@ public class DoomPlayerManager : MonoBehaviour
 	private void LateUpdate()
 	{
 		cameraController.HandleCameraInput(
-			new Vector2(Input.GetAxisRaw(MouseX), Input.GetAxisRaw(MouseY)),
+			new Vector2(Input.GetAxisRaw(MouseX), 0f /* Input.GetAxisRaw(MouseY) */),
 			cameraTarget);
 		
-		_cameraHeadBob.HandleCameraBobbing(cameraController.CameraReference.transform, strength: 0.25f);
+		_cameraHeadBob.HandleCameraBobbing(cameraController.CameraReference.transform, strength: cameraBobbingStrength);
 	}
 }
