@@ -27,6 +27,19 @@ public class GunParameters_SO : ScriptableObject
 		}
 	}
 	
+	public void Fire(bool[] conditions)
+	{
+		switch (TriggerMethod)
+		{
+			case TriggerType.Single:
+				if (Input.GetMouseButtonDown(0) && CheckConditionals(conditions)) OnGunFired?.Invoke();
+				break;
+			case TriggerType.Automatic:
+				if (Input.GetMouseButton(0) && CheckConditionals(conditions)) OnGunFired?.Invoke();
+				break;
+		}
+	}
+	
 	public void HandleProjectile(Action hitscan, Action projectile)
 	{
 		switch (ProjectileMethod)
@@ -38,6 +51,17 @@ public class GunParameters_SO : ScriptableObject
 				projectile?.Invoke();
 				break;
 		}
+	}
+	
+	private bool CheckConditionals(bool[] conditions)
+	{
+		bool result = true;
+		foreach (bool condition in conditions)
+		{
+			result &= condition;
+		}
+
+		return result;
 	}
 }
 
