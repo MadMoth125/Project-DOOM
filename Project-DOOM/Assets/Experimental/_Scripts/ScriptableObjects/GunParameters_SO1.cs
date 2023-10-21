@@ -9,47 +9,38 @@ namespace Attempt2
 	[CreateAssetMenu]
 	public class GunParameters_SO1 : ScriptableObject
 	{
-		public event Action OnGunFired;
+		public delegate void FireDelegate();
+		
+		public TriggerType TriggerMethod => triggerMethod;
 		
 		[Header("Input Parameters")]
 		[SerializeField]
 		private TriggerType triggerMethod = TriggerType.Single;
 		
-		[Header("Gun Parameters")]
-		[SerializeField]
-		private int damage = 10;
-		[Space]
-		[SerializeField]
-		private int ammoCount = 10;
-		[SerializeField]
-		private int maxAmmoCount = 100;
-		
-		public TriggerType TriggerMethod => triggerMethod;
-
-		public void Fire(KeyCode key = KeyCode.Mouse0)
+		public void Fire(FireDelegate function, KeyCode key = KeyCode.Mouse0)
 		{
 			switch (TriggerMethod)
 			{
 				// default:
 				case TriggerType.Single:
-					if (Input.GetKeyDown(key)) OnGunFired?.Invoke();
+					if (Input.GetKeyDown(key)) function();
 					break;
 				case TriggerType.Automatic:
-					if (Input.GetKey(key)) OnGunFired?.Invoke();
+					if (Input.GetKey(key)) function();
 					break;
 			}
 		}
 		
-		public void Fire(bool[] conditions, KeyCode key = KeyCode.Mouse0)
+		public void Fire(bool[] conditions, FireDelegate function, KeyCode key = KeyCode.Mouse0)
 		{
 			switch (TriggerMethod)
 			{
 				// default:
 				case TriggerType.Single:
-					if (Input.GetKeyDown(key) && CheckConditionals(conditions)) OnGunFired?.Invoke();
+					if (Input.GetKeyDown(key) && CheckConditionals(conditions)) function();
 					break;
 				case TriggerType.Automatic:
-					if (Input.GetKey(key) && CheckConditionals(conditions)) OnGunFired?.Invoke();
+					if (Input.GetKey(key) && CheckConditionals(conditions)) function();
 					break;
 			}
 		}
@@ -70,7 +61,7 @@ namespace Attempt2
 		}
 	}
 	
-	// e.g., pistol vs rifle
+	// e.g., click vs hold
 	public enum TriggerType
 	{
 		Single,

@@ -5,33 +5,45 @@ using UnityEngine;
 
 public class WeaponAnimationEventHandler : MonoBehaviour
 {
-	public void DisableWeapon()
+	public static readonly int FireConditionHash = Animator.StringToHash("Fire");
+	
+	public Animator AnimatorComponent { get; private set; }
+	public Weapon WeaponComponent { get; private set; }
+
+	public bool CanFire { get; private set; }
+
+	protected virtual void Awake()
 	{
-		Debug.Log("Weapon Disabled");
+		// Animator should be on the same GameObject as this script
+		AnimatorComponent ??= GetComponent<Animator>();
+		
+		WeaponComponent ??= GetComponentInParent<Weapon>(); // check if a weapon in in the parent GameObject
+		WeaponComponent ??= GetComponent<Weapon>(); // check if a weapon is in the same GameObject
+		WeaponComponent ??= GetComponentInChildren<Weapon>(); // check if a weapon is in a child GameObject
 	}
 	
-	public void EnableWeapon()
+	protected virtual void OnEnable()
 	{
-		Debug.Log("Weapon Enabled");
+		WeaponComponent.OnFireConditionMet += FireWeaponAnimation;
 	}
 	
-	private void OnEnable()
+	protected virtual void OnDisable()
 	{
-		
+		WeaponComponent.OnFireConditionMet -= FireWeaponAnimation;
 	}
 
-	private void OnDisable()
+	public virtual void EnableWeapon()
 	{
-		
+		CanFire = true;
+	}
+	
+	public virtual void DisableWeapon()
+	{
+		CanFire = false;
 	}
 
-	private void Start()
+	protected virtual void FireWeaponAnimation()
 	{
-
-	}
-
-	private void Update()
-	{
-		
+		AnimatorComponent.SetBool(FireConditionHash, true);
 	}
 }

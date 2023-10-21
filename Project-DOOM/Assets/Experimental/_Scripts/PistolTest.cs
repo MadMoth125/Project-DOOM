@@ -5,13 +5,22 @@ using UnityEngine;
 
 public class PistolTest : Weapon
 {
+	public WeaponAnimationEventHandler eventHandler;
+	
 	private void Start()
 	{
-		fireConditions = new bool[] { false };
+		fireConditions = new bool[1] { false };
+	}
+
+	protected override void Update()
+	{
+		fireConditions[0] = eventHandler.CanFire;
+		base.Update();
 	}
 
 	protected override void Fire()
 	{
-		Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 100, Color.red, 1f);
+		base.Fire();
+		Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 50, Color.red, 1f);
 	}
 }

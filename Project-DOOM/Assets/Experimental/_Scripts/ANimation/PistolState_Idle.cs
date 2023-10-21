@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponState_Fire : Weapon_StateMachine
+public class PistolState_Idle : Weapon_StateMachine
 {
 	public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnStateEnter(animator, stateInfo, layerIndex);
-		eventHandler.DisableWeapon();
+		eventHandler.EnableWeapon();
 	}
 
 	public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,5 +19,6 @@ public class WeaponState_Fire : Weapon_StateMachine
 	public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		base.OnStateExit(animator, stateInfo, layerIndex);
+		eventHandler.DisableWeapon();
 	}
 }
