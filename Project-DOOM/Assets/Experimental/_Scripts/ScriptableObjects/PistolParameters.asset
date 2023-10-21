@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c730bbe8411f68419af7b12f627a18c, type: 3}
   m_Name: PistolParameters
   m_EditorClassIdentifier: 
-  triggerMethod: 0
+  triggerMethod: 1
   damage: 10
   ammoCount: 10
   maxAmmoCount: 100
