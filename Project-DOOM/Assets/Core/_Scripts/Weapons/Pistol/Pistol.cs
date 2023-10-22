@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ProjectDOOM.Weapons
 {
-    public class PistolTest : Weapon
+    public class Pistol : Weapon
     {
         private void Start()
         {
