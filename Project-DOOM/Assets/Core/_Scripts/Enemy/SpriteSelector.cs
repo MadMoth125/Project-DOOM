@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
-public class SpriteAnimator : MonoBehaviour
+public class SpriteSelector : MonoBehaviour
 {
 	private readonly AngleIndexFromTransform _angleCheck = new AngleIndexFromTransform();
 	private readonly int _rotationPropertyHash = Animator.StringToHash("Rotation Index");
@@ -39,7 +37,7 @@ public class SpriteAnimator : MonoBehaviour
 			_lastRotationIndex = _rotationIndex;
 			
 			// flipping sprite based on rotation index
-			_spriteRendererComponent.flipX = _rotationIndex is > 0 and < 4;
+			_spriteRendererComponent.flipX = !(_rotationIndex is > 0 and < 4);
 			
 			// setting animator rotation index
 			_animatorComponent.SetFloat(_rotationPropertyHash, _angleCheck.GetRotationIndex(_angle));
@@ -50,7 +48,7 @@ public class SpriteAnimator : MonoBehaviour
 	{
 		_target ??= Camera.main.transform;
 		
-		_spriteRendererComponent ??= GetComponent<SpriteRenderer>();
-		_animatorComponent ??= GetComponent<Animator>();
+		_spriteRendererComponent ??= GetComponentInChildren<SpriteRenderer>();
+		_animatorComponent ??= GetComponentInChildren<Animator>();
 	}
 }
