@@ -17,12 +17,20 @@ namespace ProjectDOOM.Weapons
 
         protected bool[] fireConditions;
 
-        protected void Awake()
+        protected virtual void Awake()
         {
-            eventHandler ??= GetComponent<IWeaponEventHandler>();
-            eventHandler ??= GetComponentInChildren<IWeaponEventHandler>();
+            // eventHandler = GetComponent<IWeaponEventHandler>();
+            eventHandler = GetComponentInChildren<IWeaponEventHandler>();
 		
-            eventHandler.SetWeaponComponent(this);
+            if (eventHandler == null)
+            {
+                Debug.LogError($"No event handler found for {gameObject.name}.");
+                return;
+            }
+            else
+            {
+                eventHandler.SetWeaponComponent(this);
+            }
         }
 
         protected virtual void Update()

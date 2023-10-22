@@ -7,6 +7,11 @@ namespace ProjectDOOM.Weapons
 {
     public class Pistol : Weapon
     {
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
         private void Start()
         {
             // we initialize the fire conditions array with the number of conditions we want to check
