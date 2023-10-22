@@ -1,34 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Attempt2;
+using ProjectDOOM.Weapons.Interfaces;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+
+namespace ProjectDOOM.Weapons
 {
-	public event Action OnFireConditionMet;
+    public abstract class Weapon : MonoBehaviour
+    {
+        public event Action OnFireConditionMet;
 	
-	[SerializeField]
-	protected GunParameters_SO gunParameters;
-	protected IWeaponEventHandler eventHandler;
+        [SerializeField]
+        protected GunControlParameters_SO gunControlParameters;
+        protected IWeaponEventHandler eventHandler;
 
-	protected bool[] fireConditions;
+        protected bool[] fireConditions;
 
-	protected void Awake()
-	{
-		eventHandler ??= GetComponent<IWeaponEventHandler>();
-		eventHandler ??= GetComponentInChildren<IWeaponEventHandler>();
+        protected void Awake()
+        {
+            eventHandler ??= GetComponent<IWeaponEventHandler>();
+            eventHandler ??= GetComponentInChildren<IWeaponEventHandler>();
 		
-		eventHandler.SetWeaponComponent(this);
-	}
+            eventHandler.SetWeaponComponent(this);
+        }
 
-	protected virtual void Update()
-	{
-		gunParameters.Fire(fireConditions, Fire);
-	}
+        protected virtual void Update()
+        {
+            gunControlParameters.Fire(fireConditions, Fire);
+        }
 
-	protected virtual void Fire()
-	{
-		OnFireConditionMet?.Invoke();
-	}
+        protected virtual void Fire()
+        {
+            OnFireConditionMet?.Invoke();
+        }
+    }
 }

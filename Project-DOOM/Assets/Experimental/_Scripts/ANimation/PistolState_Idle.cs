@@ -3,24 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PistolState_Idle : Weapon_StateMachine
+namespace ProjectDOOM.Weapons.StateMachine
 {
-	public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+	public class PistolState_Idle : Weapon_StateMachine
 	{
-		base.OnStateEnter(animator, stateInfo, layerIndex);
+		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		{
+			base.OnStateEnter(animator, stateInfo, layerIndex);
 		
-		eventHandler?.EnableWeapon();
-	}
+			eventHandler?.EnableWeapon();
+		}
 
-	public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	{
-		base.OnStateUpdate(animator, stateInfo, layerIndex);
-	}
+		public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		{
+			base.OnStateUpdate(animator, stateInfo, layerIndex);
+		}
 
-	public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	{
-		base.OnStateExit(animator, stateInfo, layerIndex);
+		public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+		{
+			base.OnStateExit(animator, stateInfo, layerIndex);
 		
-		eventHandler?.DisableWeapon();
+			eventHandler?.DisableWeapon();
+		}
 	}
 }

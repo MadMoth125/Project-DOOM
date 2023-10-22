@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using ProjectDOOM.Weapons.Interfaces;
 using UnityEngine;
 
-public class Weapon_StateMachine : StateMachineBehaviour
+namespace ProjectDOOM.Weapons.StateMachine
 {
-    protected IWeaponEventHandler eventHandler;
-    
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public class Weapon_StateMachine : StateMachineBehaviour
     {
-        eventHandler ??= animator.GetComponent<IWeaponEventHandler>();
+        protected IWeaponEventHandler eventHandler;
+    
+        // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            eventHandler ??= animator.GetComponent<IWeaponEventHandler>();
+        }
     }
 }

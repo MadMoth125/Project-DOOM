@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Attempt2
+namespace ProjectDOOM.Weapons
 {
 	[CreateAssetMenu]
-	public class GunParameters_SO : ScriptableObject
+	public class GunControlParameters_SO : ScriptableObject
 	{
 		/// <summary>
 		/// Delegate for a function that can be called when the weapon is fired.
