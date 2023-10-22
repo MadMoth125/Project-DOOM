@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b8250176a804c04e89f36b5c83c6b5b, type: 3}
-  m_Name: New Gun Parameters
+  m_Script: {fileID: 11500000, guid: 5c730bbe8411f68419af7b12f627a18c, type: 3}
+  m_Name: PistolParameters
   m_EditorClassIdentifier: 
-  <TriggerMethod>k__BackingField: 0
-  <ProjectileMethod>k__BackingField: 0
+  triggerMethod: 1
+  damage: 10
+  ammoCount: 10
+  maxAmmoCount: 100
