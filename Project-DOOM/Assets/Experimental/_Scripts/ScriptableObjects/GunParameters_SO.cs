@@ -26,7 +26,6 @@ namespace Attempt2
 		{
 			switch (TriggerMethod)
 			{
-				// default:
 				case TriggerType.Single:
 					if (Input.GetKeyDown(key)) function();
 					break;
@@ -40,7 +39,6 @@ namespace Attempt2
 		{
 			switch (TriggerMethod)
 			{
-				// default:
 				case TriggerType.Single:
 					if (Input.GetKeyDown(key) && CheckConditionals(conditions)) function();
 					break;

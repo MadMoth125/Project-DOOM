@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Make sure the script execution order is set to run this script AFTER the <see cref="Weapon"/> script.
+/// This is so the handler can properly subscribe to the <see cref="Weapon.OnFireConditionMet"/> event.
+/// </summary>
 public class WeaponAnimationEventHandler : MonoBehaviour, IWeaponEventHandler
 {
 	/// <summary>
@@ -12,10 +16,16 @@ public class WeaponAnimationEventHandler : MonoBehaviour, IWeaponEventHandler
 	public static readonly int FireConditionHash = Animator.StringToHash("Fire");
 	
 	/// <summary>
-	/// Animator component that the event handler will interface with.
+	/// Animator component that the event handler will interact with.
+	/// Should be on the same GameObject as this script.
 	/// </summary>
 	public Animator AnimatorComponent { get; set; }
-	public Weapon WeaponComponent { get; set; }
+	
+	/// <summary>
+	/// Weapon component that the event handler will interface with.
+	/// Should be set in the Awake method of the Weapon that uses this event handler.
+	/// </summary>
+	public Weapon WeaponComponent { get; private set; }
 
 	/// <summary>
 	/// A flag that determines if the weapon can fire.
@@ -24,28 +34,22 @@ public class WeaponAnimationEventHandler : MonoBehaviour, IWeaponEventHandler
 
 	protected virtual void Awake()
 	{
-		// Animator should be on the same GameObject as this script
 		AnimatorComponent ??= GetComponent<Animator>();
-		
-		/*WeaponComponent ??= GetComponentInParent<Weapon>(); // check if a weapon in in the parent GameObject
-		WeaponComponent ??= GetComponent<Weapon>(); // check if a weapon is in the same GameObject
-		WeaponComponent ??= GetComponentInChildren<Weapon>(); // check if a weapon is in a child GameObject*/
 	}
 	
 	protected virtual void OnEnable()
 	{
-		if (WeaponComponent)
-		{
-			WeaponComponent.OnFireConditionMet += FireWeaponAnimation;
-		}
+		WeaponComponent.OnFireConditionMet += FireWeaponAnimation;
 	}
 	
 	protected virtual void OnDisable()
 	{
-		if (WeaponComponent)
-		{
-			WeaponComponent.OnFireConditionMet -= FireWeaponAnimation;
-		}
+		WeaponComponent.OnFireConditionMet -= FireWeaponAnimation;
+	}
+
+	public void SetWeaponComponent(Weapon weapon)
+	{
+		WeaponComponent = weapon;
 	}
 
 	public virtual void EnableWeapon()

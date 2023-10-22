@@ -5,14 +5,6 @@ using UnityEngine;
 
 public class PistolTest : Weapon
 {
-	[SerializeField]
-	protected WeaponAnimationEventHandler eventHandler;
-
-	private void Awake()
-	{
-		eventHandler.WeaponComponent = this;
-	}
-
 	private void Start()
 	{
 		// we initialize the fire conditions array with the number of conditions we want to check
