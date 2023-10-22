@@ -1,20 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Attempt2
 {
 	[CreateAssetMenu]
-	public class GunParameters_SO1 : ScriptableObject
+	public class GunParameters_SO : ScriptableObject
 	{
+		/// <summary>
+		/// Delegate for a function that can be called when the weapon is fired.
+		/// </summary>
 		public delegate void FireDelegate();
 		
 		public TriggerType TriggerMethod => triggerMethod;
 		
 		[Header("Input Parameters")]
 		[SerializeField]
+		[Tooltip("How should the weapon be fired?\n" +
+		         "\nSingle: Called for a single frame when the selected key is pressed.\n" +
+		         "\nAutomatic: Called for every frame while the selected key is pressed.")]
 		private TriggerType triggerMethod = TriggerType.Single;
 		
 		public void Fire(FireDelegate function, KeyCode key = KeyCode.Mouse0)
@@ -45,7 +50,7 @@ namespace Attempt2
 			}
 		}
 		
-		private bool CheckConditionals([CanBeNull] bool[] conditions)
+		private bool CheckConditionals( bool[] conditions)
 		{
 			if (conditions == null || conditions.Length == 0) return true;
 

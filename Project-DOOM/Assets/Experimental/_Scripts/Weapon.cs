@@ -9,7 +9,7 @@ public abstract class Weapon : MonoBehaviour
 	public event Action OnFireConditionMet;
 	
 	[SerializeField]
-	protected GunParameters_SO1 gunParameters;
+	protected GunParameters_SO gunParameters;
 
 	protected bool[] fireConditions;
 
