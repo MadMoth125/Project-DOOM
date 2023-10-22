@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Doom.DeadScripts
+namespace ProjectDOOM.deprecated
 {
 	public class PlayerManager : MonoBehaviour
 	{
@@ -11,8 +11,7 @@ namespace Doom.DeadScripts
 		private const string Vertical = "Vertical";
 		private const string MouseX = "Mouse X";
 		private const string MouseY = "Mouse Y";
-	
-	
+		
 		public DoomCamera playerCamera;
 		public DoomController playerController;
 

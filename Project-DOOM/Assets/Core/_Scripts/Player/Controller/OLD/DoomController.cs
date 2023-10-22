@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using KinematicCharacterController;
 using UnityEngine;
 
-namespace Doom.DeadScripts
+namespace ProjectDOOM.deprecated
 {
 	[RequireComponent(typeof(KinematicCharacterMotor))]
 	public class DoomController : MonoBehaviour, ICharacterController
@@ -33,18 +33,24 @@ namespace Doom.DeadScripts
 		private Vector3 _moveInputVector;
 		private Vector3 _lookInputVector;
 		
+		/*
 		private bool _jumpRequested = false;
 		private bool _jumpConsumed = false;
 		private bool _jumpedThisFrame = false;
+		*/
 		
+		/*
 		private float _timeSinceJumpRequested = Mathf.Infinity;
 		private float _timeSinceLastAbleToJump = 0f;
+		*/
 		
 		private Vector3 _internalVelocityAdd = Vector3.zero;
 		
+		/*
 		private bool _shouldBeCrouching = false;
 		private bool _isCrouching = false;
-
+		*/
+		
 		private void Awake()
 		{
 			// lazy load the kinematic motor reference
@@ -95,8 +101,8 @@ namespace Doom.DeadScripts
 	            // Jumping input
 	            if (inputs.JumpDown)
 	            {
-		            _timeSinceJumpRequested = 0f;
-		            _jumpRequested = true;
+		            // _timeSinceJumpRequested = 0f;
+		            // _jumpRequested = true;
 	            }
 	        }
 		

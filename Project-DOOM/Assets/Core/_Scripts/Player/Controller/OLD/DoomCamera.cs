@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Doom.DeadScripts
+namespace ProjectDOOM.deprecated
 {
 	public class DoomCamera : MonoBehaviour
 	{
