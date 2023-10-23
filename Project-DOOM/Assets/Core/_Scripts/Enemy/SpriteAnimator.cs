@@ -8,7 +8,7 @@ using UnityEngine;
 public class SpriteAnimator : MonoBehaviour
 {
 	private readonly AngleIndexFromTransform _angleCheck = new AngleIndexFromTransform();
-	private readonly int _rotationProperty = Animator.StringToHash("Rotation Index");
+	private readonly int _rotationPropertyHash = Animator.StringToHash("Rotation Index");
 	
 	private SpriteRenderer _spriteRendererComponent;
 	private Animator _animatorComponent;
@@ -42,7 +42,7 @@ public class SpriteAnimator : MonoBehaviour
 			_spriteRendererComponent.flipX = _rotationIndex is > 0 and < 4;
 			
 			// setting animator rotation index
-			_animatorComponent.SetFloat(_rotationProperty, _angleCheck.GetRotationIndex(_angle));
+			_animatorComponent.SetFloat(_rotationPropertyHash, _angleCheck.GetRotationIndex(_angle));
 		}
 	}
 	
