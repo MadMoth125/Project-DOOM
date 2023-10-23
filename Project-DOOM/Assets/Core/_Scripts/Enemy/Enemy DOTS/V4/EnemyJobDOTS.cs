@@ -7,7 +7,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 
-[BurstCompile(CompileSynchronously = true)]
+[BurstCompile]
 public struct EnemyJobDOTS : IJobParallelFor
 {
 	[ReadOnly]
@@ -41,6 +41,7 @@ public struct EnemyJobDOTS : IJobParallelFor
 		returnedRotation[index] = Quaternion.Euler(0f, cameraRotationY, 0f);
 	}
 	
+	[BurstCompile]
 	private int GetRotationIndex(float currentAngle, NativeArray<float3> angles)
 	{
 		for (int i = 0; i < angles.Length; i++)
@@ -70,6 +71,7 @@ public struct EnemyJobDOTS : IJobParallelFor
 		return 0;
 	}
 
+	[BurstCompile]
 	private float BetterDetermineAngle(float3 a, float3 b, float3 aDir)
 	{
 		float3 targetPosition = new float3(b.x, a.y, b.z);
