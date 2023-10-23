@@ -158,8 +158,6 @@ public class EnemyManagerDOTS : MonoBehaviour
 		// new AngleThresholds(-67.5f, -22.5f, 1),
 	};
 	
-	private int _lastRotationIndex = 0;
-	
 	private int GetRotationIndex(float currentAngle, AngleThresholds[] thresholds)
 	{
 		for (int i = 0; i < thresholds.Length; i++)
