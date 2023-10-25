@@ -30,9 +30,7 @@ public class DoomCharacterController : MonoBehaviour , ICharacterController
 	
 	private void Awake()
 	{
-		// lazy load if null
-		_motor ??= GetComponent<KinematicCharacterMotor>();
-		_motor ??= GetComponentInChildren<KinematicCharacterMotor>();
+		_motor = gameObject.SearchForComponent<KinematicCharacterMotor>();
 		
 		_motor.CharacterController = this;
 	}

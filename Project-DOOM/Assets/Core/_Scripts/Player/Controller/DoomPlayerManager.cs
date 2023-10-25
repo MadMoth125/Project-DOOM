@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using KinematicCharacterController;
 using UnityEngine;
 
 public class DoomPlayerManager : MonoBehaviour
@@ -13,7 +14,12 @@ public class DoomPlayerManager : MonoBehaviour
 	
 	public DoomCharacterController characterController;
 	public DoomCameraController cameraController;
+	private KinematicCharacterMotor characterMotor;
 	private CameraHeadBob _cameraHeadBob;
+	
+	[Space(10)]
+	[Header("Spawn Parameters")]
+	public Transform spawnPoint;
 	
 	[Space(10)]
 	[Header("Camera Parameters")]
@@ -22,9 +28,12 @@ public class DoomPlayerManager : MonoBehaviour
 	
 	private void Awake()
 	{
-		// lazy load if null
+		// Finding references in scene if null
 		characterController ??= FindObjectOfType<DoomCharacterController>();
 		cameraController ??= FindObjectOfType<DoomCameraController>();
+		
+		// Getting a reference to the KinematicCharacterMotor on the character
+		characterMotor = characterController.gameObject.SearchForComponent<KinematicCharacterMotor>();
 		
 		_cameraHeadBob = new CameraHeadBob();
 	}
@@ -34,7 +43,7 @@ public class DoomPlayerManager : MonoBehaviour
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
 		
-		cameraController.transform.rotation = cameraTarget.rotation;
+		characterMotor.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
 	}
 
 	private void Update()
