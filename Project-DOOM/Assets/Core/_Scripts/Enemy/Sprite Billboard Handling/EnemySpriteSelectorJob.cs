@@ -7,7 +7,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace DOTS.V6
+namespace EnemySpriteHandling
 {
 	[BurstCompile]
 	public struct EnemySpriteSelectorJob : IJobParallelFor

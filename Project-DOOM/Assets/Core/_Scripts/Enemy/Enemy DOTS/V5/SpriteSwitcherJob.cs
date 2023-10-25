@@ -7,7 +7,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace DOTS.V5
+namespace ProjectDOOM.deprecated.DOTS
 {
 	public struct SpriteSwitcherJob : IJob
 	{

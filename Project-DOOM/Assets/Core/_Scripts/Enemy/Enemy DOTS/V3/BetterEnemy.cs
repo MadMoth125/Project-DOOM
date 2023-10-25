@@ -3,31 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BetterEnemy : MonoBehaviour
+namespace ProjectDOOM.deprecated.V3
 {
-	private BetterEnemyManager enemyManager;
-
-	private void OnEnable()
+	public class BetterEnemy : MonoBehaviour
 	{
-		// Ensure that the EnemyManager exists in the scene
-		enemyManager = FindObjectOfType<BetterEnemyManager>();
-		if (enemyManager != null)
-		{
-			// Add this enemy to the manager
-			enemyManager.AddEnemy(this);
-		}
-		else
-		{
-			Debug.LogError("EnemyManager not found in the scene!");
-		}
-	}
+		private BetterEnemyManager enemyManager;
 
-	private void OnDisable()
-	{
-		// Remove this enemy from the manager when disabled
-		if (enemyManager != null)
+		private void OnEnable()
 		{
-			enemyManager.RemoveEnemy(this);
+			// Ensure that the EnemyManager exists in the scene
+			enemyManager = FindObjectOfType<BetterEnemyManager>();
+			if (enemyManager != null)
+			{
+				// Add this enemy to the manager
+				enemyManager.AddEnemy(this);
+			}
+			else
+			{
+				Debug.LogError("EnemyManager not found in the scene!");
+			}
+		}
+
+		private void OnDisable()
+		{
+			// Remove this enemy from the manager when disabled
+			if (enemyManager != null)
+			{
+				enemyManager.RemoveEnemy(this);
+			}
 		}
 	}
 }

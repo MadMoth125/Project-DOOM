@@ -5,29 +5,31 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 
-public class BetterEnemyJob : IJobParallelFor
+namespace ProjectDOOM.deprecated.V3
 {
-	[ReadOnly] public NativeArray<Vector3> enemyPositions;
-	[ReadOnly] public NativeArray<Vector3> enemyForwards;
-	[ReadOnly] public Vector3 playerCameraPosition;
-	public NativeArray<Quaternion> resultRotations;
-	public NativeArray<int> resultIndices;
-
-	public void Execute(int index)
+	public class BetterEnemyJob : IJobParallelFor
 	{
-		Vector3 enemyPosition = enemyPositions[index];
-		Vector3 enemyForward = enemyForwards[index];
+		[ReadOnly] public NativeArray<Vector3> enemyPositions;
+		[ReadOnly] public NativeArray<Vector3> enemyForwards;
+		[ReadOnly] public Vector3 playerCameraPosition;
+		public NativeArray<Quaternion> resultRotations;
+		public NativeArray<int> resultIndices;
 
-		//float angle = BetterDetermineAngle(enemyPosition, playerCameraPosition, enemyForward);
+		public void Execute(int index)
+		{
+			Vector3 enemyPosition = enemyPositions[index];
+			Vector3 enemyForward = enemyForwards[index];
 
-		Quaternion rotation = Quaternion.LookRotation(playerCameraPosition - enemyPosition, Vector3.up);
-		resultRotations[index] = rotation;
-		//resultIndices[index] = GetRotationIndex(angle);
-	}
+			//float angle = BetterDetermineAngle(enemyPosition, playerCameraPosition, enemyForward);
 
-	private int _lastRotationIndex;
+			Quaternion rotation = Quaternion.LookRotation(playerCameraPosition - enemyPosition, Vector3.up);
+			resultRotations[index] = rotation;
+			//resultIndices[index] = GetRotationIndex(angle);
+		}
 
-	/*private int GetRotationIndex(float currentAngle)
+		private int _lastRotationIndex;
+
+		/*private int GetRotationIndex(float currentAngle)
 	{
 		foreach (var (min, max, index) in _angleRanges)
 		{
@@ -48,4 +50,5 @@ public class BetterEnemyJob : IJobParallelFor
 
 		return Vector3.SignedAngle(targetDirection, forwardDirection, Vector3.up);
 	}*/
+	}
 }

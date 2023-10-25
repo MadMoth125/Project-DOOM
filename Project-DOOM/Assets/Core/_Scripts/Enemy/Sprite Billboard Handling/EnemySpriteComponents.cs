@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DOTS.V6
+namespace EnemySpriteHandling
 {
 	public class EnemySpriteComponents : MonoBehaviour, ISpriteComponentReferences
 	{
