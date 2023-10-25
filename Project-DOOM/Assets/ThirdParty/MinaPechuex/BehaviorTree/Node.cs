@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 
-namespace BehaviorTree
+namespace MinaPechuex.BehaviorTree
 {
     public enum NodeState
     {
