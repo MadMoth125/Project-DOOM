@@ -44,7 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6809be32d16dbe4c8628238d4170210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 0}
-  cameraController: {fileID: 0}
-  cameraTarget: {fileID: 0}
+  characterAsset:
+    mode: 0
+    unityReference: {fileID: 6805459327539094370, guid: 576e135f9e4a9834fb0fcbd8ac73b28d,
+      type: 3}
+    rawReference:
+      rid: -2
+  cameraAsset:
+    mode: 0
+    unityReference: {fileID: 6475940848025088682, guid: 8ad87d55929df664a8bc9a75a4d47a60,
+      type: 3}
+    rawReference:
+      rid: -2
+  spawnPoint: {fileID: 0}
   cameraBobbingStrength: 0.1
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

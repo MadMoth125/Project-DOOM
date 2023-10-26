@@ -5,11 +5,17 @@ using KinematicCharacterController;
 using UnityEngine;
 
 [SelectionBase]
-[RequireComponent(typeof(KinematicCharacterMotor))]
-public class DoomCharacterController : MonoBehaviour , ICharacterController
+[RequireComponent(typeof(CharacterMotor))]
+public class DoomCharacter : MonoBehaviour, IKinematicCharacterController, ICharacterController
 {
-	private KinematicCharacterMotor _motor;
+	[field: SerializeField]
+	public Transform CameraTransform { get; private set; }
+	
+	public CharacterMotor CharacterMotorComponent => _motor;
+	private CharacterMotor _motor;
 
+	public Transform CharacterTransform => transform;
+	public GameObject CharacterGameObject => gameObject;
 	public Vector3 Velocity => _motor.Velocity;
 	
 	[Header("Stable Movement")]
@@ -30,32 +36,30 @@ public class DoomCharacterController : MonoBehaviour , ICharacterController
 	
 	private void Awake()
 	{
-		_motor = gameObject.SearchForComponent<KinematicCharacterMotor>();
+		_motor = gameObject.SearchForComponent<CharacterMotor>();
 		
 		_motor.CharacterController = this;
 	}
-
-	/// <summary>
-	/// This is called every frame by DoomPlayerManager
-	/// </summary>
-	public void HandleMovementInput(Vector2 direction, Quaternion rotation)
+	
+	public void MoveCharacter(Vector3 input, Quaternion direction)
 	{
-		// Clamp input
-		Vector3 moveInputVector = new Vector3(direction.x, 0f, direction.y);
-
 		// Calculate camera direction and rotation on the character plane
-		Vector3 cameraPlanarDirection = Vector3.ProjectOnPlane(rotation * Vector3.forward, _motor.CharacterUp).normalized;
+		Vector3 cameraPlanarDirection = Vector3.ProjectOnPlane(direction * Vector3.forward, _motor.CharacterUp).normalized;
+		
 		if (cameraPlanarDirection.sqrMagnitude == 0f)
 		{
-			cameraPlanarDirection = Vector3.ProjectOnPlane(rotation * Vector3.up, _motor.CharacterUp).normalized;
+			cameraPlanarDirection = Vector3.ProjectOnPlane(direction * Vector3.up, _motor.CharacterUp).normalized;
 		}
+		
 		Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, _motor.CharacterUp);
 
 		// Move and look inputs
-		_moveInputVector = cameraPlanarRotation * moveInputVector;
+		_moveInputVector = cameraPlanarRotation * input;
 		_lookInputVector = cameraPlanarDirection;
 	}
-	
+
+	#region KinematicCharacterController Movement Handling
+
 	public void UpdateRotation(ref Quaternion currentRotation, float deltaTime)
 	{
 		if (_lookInputVector == Vector3.zero) return;
@@ -93,10 +97,10 @@ public class DoomCharacterController : MonoBehaviour , ICharacterController
             currentVelocity *= (1f / (1f + (drag * deltaTime)));
         }
 
-        void OnGroundMovement(ref Vector3 curVel, float d)
+        void OnGroundMovement(ref Vector3 velocity, float delta)
         {
 	        // Reorient source velocity on current ground slope (this is because we don't want our smoothing to cause any velocity losses in slope changes)
-	        curVel = _motor.GetDirectionTangentToSurface(curVel, _motor.GroundingStatus.GroundNormal) * curVel.magnitude;
+	        velocity = _motor.GetDirectionTangentToSurface(velocity, _motor.GroundingStatus.GroundNormal) * velocity.magnitude;
 
 	        // Calculate target velocity
 	        Vector3 inputRight = Vector3.Cross(_moveInputVector, _motor.CharacterUp);
@@ -104,10 +108,10 @@ public class DoomCharacterController : MonoBehaviour , ICharacterController
 	        targetMovementVelocity = reorientedInput * maxStableMoveSpeed;
 
 	        // Smooth movement Velocity
-	        curVel = Vector3.Lerp(curVel, targetMovementVelocity, 1 - Mathf.Exp(-stableMovementSharpness * d));
+	        velocity = Vector3.Lerp(velocity, targetMovementVelocity, 1 - Mathf.Exp(-stableMovementSharpness * delta));
         }
 
-        void InAirMovement(ref Vector3 curVel, float d)
+        void InAirMovement(ref Vector3 velocity, float delta)
         {
 	        // Add move input
 	        if (_moveInputVector.sqrMagnitude > 0f)
@@ -125,11 +129,15 @@ public class DoomCharacterController : MonoBehaviour , ICharacterController
 			        targetMovementVelocity = Vector3.ProjectOnPlane(targetMovementVelocity, perpendicularObstructionNormal);
 		        }
 
-		        Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - curVel, gravity);
-		        curVel += velocityDiff * (maxAirMoveSpeed * d);
+		        Vector3 velocityDiff = Vector3.ProjectOnPlane(targetMovementVelocity - velocity, gravity);
+		        velocity += velocityDiff * (maxAirMoveSpeed * delta);
 	        }
         }
 	}
+
+	#endregion
+	
+	#region KinematicCharacterController Functions
 
 	public void BeforeCharacterUpdate(float deltaTime)
 	{
@@ -173,9 +181,26 @@ public class DoomCharacterController : MonoBehaviour , ICharacterController
 		
 	}
 
-	private void OnDrawGizmosSelected()
+	#endregion
+	
+	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawRay(transform.position + transform.up, transform.forward * 2f);
+	}
+
+	public void RotateCharacter(Vector3 deltaRotation)
+	{
+		SetCharacterRotation(Quaternion.Euler(transform.rotation.eulerAngles + deltaRotation));
+	}
+
+	public void SetCharacterPosition(Vector3 position)
+	{
+		CharacterMotorComponent.SetPosition(position);
+	}
+
+	public void SetCharacterRotation(Quaternion rotation)
+	{
+		CharacterMotorComponent.SetRotation(rotation);
 	}
 }

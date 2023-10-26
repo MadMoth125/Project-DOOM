@@ -46,14 +46,12 @@ namespace EnemySpriteHandling
 			
 			InitializeDirectionArray();
 			
-			_cameraTransform = Camera.main.transform;
-			
 			// local functions
 			void InitializeSingleton()
 			{
 				if (Instance)
 				{
-					Debug.LogWarning($"Cannot have more than one {this.GetType()}", this);
+					Debug.LogWarning($"Cannot have more than one {GetType()}", this);
 					Destroy(gameObject);
 					return;
 				}
@@ -67,6 +65,12 @@ namespace EnemySpriteHandling
 				DisposeDirectionsArray();
 				_directionsNativeArray = new NativeArray<float3>(_directions, Allocator.Persistent);
 			}
+		}
+
+		private void Start()
+		{
+			Debug.Assert(Camera.main != null, "Camera.main != null");
+			_cameraTransform = Camera.main.transform;
 		}
 
 		private void DetectComponentChanges()

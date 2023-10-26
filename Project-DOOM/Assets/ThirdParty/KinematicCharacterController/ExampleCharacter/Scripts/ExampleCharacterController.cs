@@ -40,9 +40,9 @@ namespace KinematicCharacterController.Examples
         TowardsGroundSlopeAndGravity,
     }
 
-    public class ExampleCharacterController : MonoBehaviour, ICharacterController
+    public class ExampleCharacterController : MonoBehaviour, IKinematicCharacterController
     {
-        public KinematicCharacterMotor Motor;
+        public CharacterMotor Motor;
 
         [Header("Stable Movement")]
         public float MaxStableMoveSpeed = 10f;

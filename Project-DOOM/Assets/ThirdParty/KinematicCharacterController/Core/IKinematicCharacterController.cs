@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace KinematicCharacterController
 {
-    public interface ICharacterController
+    public interface IKinematicCharacterController
     {
         /// <summary>
         /// This is called when the motor wants to know what its rotation should be right now

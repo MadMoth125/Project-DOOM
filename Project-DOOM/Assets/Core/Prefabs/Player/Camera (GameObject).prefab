@@ -318,6 +318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6aa0dfaf1067d4bb01445b79ba2cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minCameraPitch: 0
+  maxCameraPitch: 0
   rotationSpeed: 3
 --- !u!1 &4540393382257146170
 GameObject:
