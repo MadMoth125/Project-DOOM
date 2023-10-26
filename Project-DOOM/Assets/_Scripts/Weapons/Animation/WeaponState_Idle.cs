@@ -7,7 +7,7 @@ using UnityEngine;
 namespace ProjectDOOM.Weapons.StateMachine
 {
 	/// <summary>
-	/// Class contains the very basics of the weapon state machine.
+	/// Class contains the very basics of the "Idle" state for weapons.
 	/// Most weapons are simple enough to use this class as is.
 	/// </summary>
 	public class WeaponState_Idle : Weapon_StateMachine
