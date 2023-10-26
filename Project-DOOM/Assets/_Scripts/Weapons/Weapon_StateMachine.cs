@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ProjectDOOM.Weapons.Interfaces;
 using UnityEngine;
+using Utilities;
 
 namespace ProjectDOOM.Weapons.StateMachine
 {
@@ -12,7 +13,7 @@ namespace ProjectDOOM.Weapons.StateMachine
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            eventHandler ??= animator.GetComponent<IWeaponEventHandler>();
+            eventHandler = animator.gameObject.SearchForComponent<IWeaponEventHandler>();
         }
     }
 }

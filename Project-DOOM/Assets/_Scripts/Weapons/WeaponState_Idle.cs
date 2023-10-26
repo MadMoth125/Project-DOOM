@@ -1,15 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ProjectDOOM.Weapons.StateMachine;
 using UnityEngine;
 
 namespace ProjectDOOM.Weapons.StateMachine
 {
-	public class PistolState_Fire : Weapon_StateMachine
+	/// <summary>
+	/// Class contains the very basics of the weapon state machine.
+	/// Most weapons are simple enough to use this class as is.
+	/// </summary>
+	public class WeaponState_Idle : Weapon_StateMachine
 	{
 		public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 		{
 			base.OnStateEnter(animator, stateInfo, layerIndex);
+		
+			eventHandler?.EnableWeapon();
 		}
 
 		public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -21,7 +28,7 @@ namespace ProjectDOOM.Weapons.StateMachine
 		{
 			base.OnStateExit(animator, stateInfo, layerIndex);
 		
-			animator.SetBool(WeaponAnimationEventHandler.FireConditionHash, false);
+			eventHandler?.DisableWeapon();
 		}
 	}
 }
