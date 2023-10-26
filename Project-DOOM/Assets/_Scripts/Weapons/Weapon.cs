@@ -29,7 +29,7 @@ namespace ProjectDOOM.Weapons
             }
             else
             {
-                eventHandler.SetWeaponComponent(this);
+                // eventHandler.SetWeaponComponent(this);
             }
         }
 

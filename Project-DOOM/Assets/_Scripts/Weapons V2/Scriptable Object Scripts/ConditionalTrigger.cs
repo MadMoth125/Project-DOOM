@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace ProjectDOOM.Weapons.V2
 {
-	public abstract class TriggerMethod_SO : ScriptableObject
+	public abstract class ConditionalTrigger
     {
-    	public abstract void ShouldFire();
+	    public delegate void ShouldFireDelegate();
+	    
+    	public abstract void ShouldFire(ShouldFireDelegate fireDelegate, bool[] conditions);
     	
     	protected bool CheckConditionals( bool[] conditions)
     	{
@@ -24,43 +26,27 @@ namespace ProjectDOOM.Weapons.V2
     		return true;
     	}
     }
-    
-    [CreateAssetMenu(fileName = "Single Fire Method", menuName = "Weapons/Single Fire Method", order = 1)]
-    public class SingleTriggerMethod_SO : TriggerMethod_SO
+
+    public class ManualTrigger : ConditionalTrigger
     {
-    	public override void ShouldFire()
-    	{
-    		if (Input.GetMouseButtonDown(0))
-    		{
-    			Debug.Log("ManualTriggerType_SO");
-    		}
-    	}
-    	
-    	public void ShouldFire(bool[] conditions)
+    	public override void ShouldFire(ShouldFireDelegate fireDelegate, bool[] conditions)
     	{
     		if (CheckConditionals(conditions) && Input.GetMouseButtonDown(0))
     		{
     			Debug.Log("ManualTriggerType_SO");
+			    fireDelegate();
     		}
     	}
     }
-    
-    [CreateAssetMenu(fileName = "Auto Fire Method", menuName = "Weapons/Auto Fire Method", order = 1)]
-    public class AutomaticTriggerMethod_SO : TriggerMethod_SO
+
+    public class AutomaticTrigger : ConditionalTrigger
     {
-    	public override void ShouldFire()
-    	{
-    		if (Input.GetMouseButton(0))
-    		{
-    			Debug.Log("AutomaticTriggerType_SO");
-    		}
-    	}
-    	
-    	public void ShouldFire(bool[] conditions)
+    	public override void ShouldFire(ShouldFireDelegate fireDelegate, bool[] conditions)
     	{
     		if (CheckConditionals(conditions) && Input.GetMouseButton(0))
     		{
     			Debug.Log("AutomaticTriggerType_SO");
+			    fireDelegate();
     		}
     	}
     }

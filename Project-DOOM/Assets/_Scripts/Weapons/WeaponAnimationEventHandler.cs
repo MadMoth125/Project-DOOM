@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ProjectDOOM.Weapons.Interfaces;
+using ProjectDOOM.Weapons.V2;
 using UnityEngine;
+using Utilities;
 
 namespace ProjectDOOM.Weapons
 {
@@ -28,46 +30,25 @@ namespace ProjectDOOM.Weapons
     	/// Weapon component that the event handler will interface with.
     	/// Should be set in the Awake method of the Weapon that uses this event handler.
     	/// </summary>
-    	public Weapon WeaponComponent { get; private set; }
+    	public IWeapon WeaponComponent { get; private set; }
     
     	/// <summary>
     	/// A flag that determines if the weapon can fire.
     	/// </summary>
     	public bool CanFire { get; private set; }
     
-    	protected virtual void Awake()
-    	{
-    		AnimatorComponent ??= GetComponent<Animator>();
-    	}
+    	protected virtual void Awake() => AnimatorComponent = gameObject.SearchForComponent<Animator>();
     	
-    	protected virtual void OnEnable()
-    	{
-    		WeaponComponent.OnFireConditionMet += FireWeaponAnimation;
-    	}
+    	protected virtual void OnEnable() => WeaponComponent.OnFireConditionMet += FireWeaponAnimation;
     	
-    	protected virtual void OnDisable()
-    	{
-    		WeaponComponent.OnFireConditionMet -= FireWeaponAnimation;
-    	}
+    	protected virtual void OnDisable() => WeaponComponent.OnFireConditionMet -= FireWeaponAnimation;
     
-    	public void SetWeaponComponent(Weapon weapon)
-    	{
-    		WeaponComponent = weapon;
-    	}
+    	public void SetWeaponComponent(IWeapon weapon) => WeaponComponent = weapon;
     
-    	public virtual void EnableWeapon()
-    	{
-    		CanFire = true;
-    	}
+    	public virtual void EnableWeapon() => CanFire = true;
     	
-    	public virtual void DisableWeapon()
-    	{
-    		CanFire = false;
-    	}
+    	public virtual void DisableWeapon() => CanFire = false;
     
-    	protected virtual void FireWeaponAnimation()
-    	{
-    		AnimatorComponent.SetBool(FireConditionHash, true);
-    	}
+    	protected virtual void FireWeaponAnimation() => AnimatorComponent.SetBool(FireConditionHash, true);
     }
 }
