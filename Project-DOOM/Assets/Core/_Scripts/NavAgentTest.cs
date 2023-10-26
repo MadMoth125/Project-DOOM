@@ -18,11 +18,11 @@ public class NavAgentTest : MonoBehaviour
 
 	private void Start()
 	{
-		
+		_navAgentComponent.SetDestination(target.position);
 	}
 
 	private void Update()
 	{
-		_navAgentComponent.SetDestination(target.position);
+		
 	}
 }

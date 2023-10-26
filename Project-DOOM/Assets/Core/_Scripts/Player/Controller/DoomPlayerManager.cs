@@ -2,19 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using KinematicCharacterController;
+using TNRD;
 using UnityEngine;
 
 public class DoomPlayerManager : MonoBehaviour
 {
+	public static readonly List<IPlayerInterface> PlayerReferences = new List<IPlayerInterface>();
+	
 	private const string Horizontal = "Horizontal";
 	private const string Vertical = "Vertical";
 	
 	private const string MouseX = "Mouse X";
 	private const string MouseY = "Mouse Y";
 	
-	public DoomCharacterController characterController;
-	public DoomCameraController cameraController;
-	private KinematicCharacterMotor characterMotor;
+	public SerializableInterface<ICameraInterface> playerCamera;
+	public SerializableInterface<IPlayerInterface> playerCharacter;
+	
 	private CameraHeadBob _cameraHeadBob;
 	
 	[Space(10)]
@@ -28,13 +31,6 @@ public class DoomPlayerManager : MonoBehaviour
 	
 	private void Awake()
 	{
-		// Finding references in scene if null
-		characterController ??= FindObjectOfType<DoomCharacterController>();
-		cameraController ??= FindObjectOfType<DoomCameraController>();
-		
-		// Getting a reference to the KinematicCharacterMotor on the character
-		characterMotor = characterController.gameObject.SearchForComponent<KinematicCharacterMotor>();
-		
 		_cameraHeadBob = new CameraHeadBob();
 	}
 
@@ -43,7 +39,7 @@ public class DoomPlayerManager : MonoBehaviour
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
 		
-		characterMotor.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+		SpawnCharacter();
 	}
 
 	private void Update()
@@ -59,10 +55,18 @@ public class DoomPlayerManager : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		cameraController.HandleCameraInput(
+		playerCharacter.HandleCameraInput(
 			new Vector2(Input.GetAxisRaw(MouseX), 0f /* Input.GetAxisRaw(MouseY) */),
 			cameraTarget);
 		
 		_cameraHeadBob.HandleCameraBobbing(cameraController.CameraReference.transform, strength: cameraBobbingStrength);
 	}
+
+	public void SpawnCharacter()
+	{
+		PlayerReferences.Add(Instantiate(
+			playerCharacter,
+			spawnPoint.position,
+			Quaternion.Euler(0f, spawnPoint.rotation.eulerAngles.y, 0f)));
+	} 
 }
