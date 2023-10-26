@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 namespace EnemySpriteHandling
 {
@@ -34,7 +35,7 @@ namespace EnemySpriteHandling
 		public void UpdateAnimatorIndex(int index)
 		{
 			// setting the index for the animator's blend tree
-			_animatorComponent.SetFloat(PropertyReferences.RotationIndexPropertyHash, index);
+			_animatorComponent.SetFloat(PropertyRefs.RotationIndexPropertyHash, index);
 			
 			// flipping the sprite based on which index we're at
 			_spriteRendererComponent.flipX = index > 0 && index < 4;

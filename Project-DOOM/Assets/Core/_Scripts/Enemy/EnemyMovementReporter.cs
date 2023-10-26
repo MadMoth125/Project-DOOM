@@ -27,7 +27,7 @@ public class EnemyMovementReporter : MonoBehaviour
 
 		if (IsMoving != _previousIsMoving)
 		{
-			animatorComponent.SetBool(PropertyReferences.IsMovingPropertyHash, IsMoving);
+			animatorComponent.SetBool(PropertyRefs.IsMovingPropertyHash, IsMoving);
 		}
 		
 		_previousIsMoving = IsMoving;

@@ -30,8 +30,6 @@ public class DoomCamera : MonoBehaviour, ICameraController
 	private Vector3 _lookInputVector = Vector3.zero;
 	private float _targetVerticalAngle = 0f;
 
-	private DoOnce _initialRotationDoOnce = new DoOnce();
-	
 	private void OnValidate()
 	{
 		// Calling in editor to ensure that the min/max values are within the range of -89 to 89 degrees.

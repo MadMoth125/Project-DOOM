@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MinaPechuex.BehaviorTree;
 using UnityEngine;
+using Utilities;
 
 [RequireComponent(typeof(EnemyMovementReporter))]
 public class ImpTree : NodeTree

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using KinematicCharacterController;
 using UnityEngine;
+using Utilities;
 
 [SelectionBase]
 [RequireComponent(typeof(CharacterMotor))]
