@@ -8,7 +8,7 @@ namespace KinematicCharacterController.Examples
 {
     public class ExamplePlayer : MonoBehaviour
     {
-        public ExampleCharacterController Character;
+        public ExampleCharacterController character;
         public ExampleCharacterCamera CharacterCamera;
 
         private const string MouseXInput = "Mouse X";
@@ -22,11 +22,11 @@ namespace KinematicCharacterController.Examples
             Cursor.lockState = CursorLockMode.Locked;
 
             // Tell camera to follow transform
-            CharacterCamera.SetFollowTransform(Character.CameraFollowPoint);
+            CharacterCamera.SetFollowTransform(character.CameraFollowPoint);
 
             // Ignore the character's collider(s) for camera obstruction checks
             CharacterCamera.IgnoredColliders.Clear();
-            CharacterCamera.IgnoredColliders.AddRange(Character.GetComponentsInChildren<Collider>());
+            CharacterCamera.IgnoredColliders.AddRange(character.GetComponentsInChildren<Collider>());
         }
 
         private void Update()
@@ -42,10 +42,10 @@ namespace KinematicCharacterController.Examples
         private void LateUpdate()
         {
             // Handle rotating the camera along with physics movers
-            if (CharacterCamera.RotateWithPhysicsMover && Character.Motor.AttachedRigidbody != null)
+            if (CharacterCamera.RotateWithPhysicsMover && character.Motor.AttachedRigidbody != null)
             {
-                CharacterCamera.PlanarDirection = Character.Motor.AttachedRigidbody.GetComponent<PhysicsMover>().RotationDeltaFromInterpolation * CharacterCamera.PlanarDirection;
-                CharacterCamera.PlanarDirection = Vector3.ProjectOnPlane(CharacterCamera.PlanarDirection, Character.Motor.CharacterUp).normalized;
+                CharacterCamera.PlanarDirection = character.Motor.AttachedRigidbody.GetComponent<PhysicsMover>().RotationDeltaFromInterpolation * CharacterCamera.PlanarDirection;
+                CharacterCamera.PlanarDirection = Vector3.ProjectOnPlane(CharacterCamera.PlanarDirection, character.Motor.CharacterUp).normalized;
             }
 
             HandleCameraInput();
@@ -93,7 +93,7 @@ namespace KinematicCharacterController.Examples
             characterInputs.CrouchUp = Input.GetKeyUp(KeyCode.C);
 
             // Apply inputs to character
-            Character.SetInputs(ref characterInputs);
+            character.SetInputs(ref characterInputs);
         }
     }
 }

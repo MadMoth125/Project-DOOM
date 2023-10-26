@@ -6,10 +6,10 @@ using UnityEngine;
 
 namespace ProjectDOOM.deprecated
 {
-	[RequireComponent(typeof(KinematicCharacterMotor))]
-	public class DoomController : MonoBehaviour, ICharacterController
+	[RequireComponent(typeof(CharacterMotor))]
+	public class DoomController : MonoBehaviour, IKinematicCharacterController
 	{
-		private KinematicCharacterMotor _kinematicMotor;
+		private CharacterMotor _motor;
 		
 		[Header("Stable Movement")]
 		public float maxStableMoveSpeed = 10f;
@@ -54,11 +54,11 @@ namespace ProjectDOOM.deprecated
 		private void Awake()
 		{
 			// lazy load the kinematic motor reference
-			_kinematicMotor ??= GetComponent<KinematicCharacterMotor>();
-			_kinematicMotor ??= GetComponentInChildren<KinematicCharacterMotor>();
+			_motor ??= GetComponent<CharacterMotor>();
+			_motor ??= GetComponentInChildren<CharacterMotor>();
 			
 			// set the character controller reference
-			_kinematicMotor.CharacterController = this;
+			_motor.CharacterController = this;
 		}
 
 		private void OnEnable()
@@ -87,12 +87,12 @@ namespace ProjectDOOM.deprecated
 	            Vector3 moveInputVector = Vector3.ClampMagnitude(new Vector3(inputs.MoveAxisRight, 0f, inputs.MoveAxisForward), 1f);
 	            
 	            // Calculate camera direction and rotation on the character plane
-	            Vector3 cameraPlanarDirection = Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.forward, _kinematicMotor.CharacterUp).normalized;
+	            Vector3 cameraPlanarDirection = Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.forward, _motor.CharacterUp).normalized;
 	            if (cameraPlanarDirection.sqrMagnitude == 0f)
 	            {
-	                cameraPlanarDirection = Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.up, _kinematicMotor.CharacterUp).normalized;
+	                cameraPlanarDirection = Vector3.ProjectOnPlane(inputs.CameraRotation * Vector3.up, _motor.CharacterUp).normalized;
 	            }
-	            Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, _kinematicMotor.CharacterUp);
+	            Quaternion cameraPlanarRotation = Quaternion.LookRotation(cameraPlanarDirection, _motor.CharacterUp);
 
 	            // Move and look inputs
 	            _moveInputVector = cameraPlanarRotation * moveInputVector;
@@ -119,7 +119,7 @@ namespace ProjectDOOM.deprecated
 			// Apply added velocity
 			currentVelocity += addedVelocity;
 			
-			if (!_kinematicMotor.GroundingStatus.IsStableOnGround)
+			if (!_motor.GroundingStatus.IsStableOnGround)
 			{
 				// Gravity
 				// currentVelocity += gravity * deltaTime;
@@ -129,7 +129,7 @@ namespace ProjectDOOM.deprecated
 			currentVelocity *= (1f / (1f + (drag * deltaTime)));
 			// throw new NotImplementedException();
 			
-			Debug.Log(_kinematicMotor.GroundingStatus.IsStableOnGround);
+			Debug.Log(_motor.GroundingStatus.IsStableOnGround);
 		}
 
 		public void BeforeCharacterUpdate(float deltaTime)

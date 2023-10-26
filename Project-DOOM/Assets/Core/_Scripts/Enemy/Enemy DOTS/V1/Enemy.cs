@@ -1,28 +1,31 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ProjectDOOM.deprecated.V1;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace ProjectDOOM.deprecated.V1
 {
-	private readonly int _rotationPropertyHash = Animator.StringToHash("Rotation Index");
+	public class Enemy : MonoBehaviour
+	{
+		private readonly int _rotationPropertyHash = Animator.StringToHash("Rotation Index");
 	
-	public SpriteRenderer SpriteRendererComponent { get; private set; }
-	public Animator SpriteAnimatorComponent { get; private set; }
+		public SpriteRenderer SpriteRendererComponent { get; private set; }
+		public Animator SpriteAnimatorComponent { get; private set; }
 
-	private void Awake()
-	{
-		SpriteRendererComponent = GetComponentInChildren<SpriteRenderer>();
-		SpriteAnimatorComponent = GetComponentInChildren<Animator>();
-	}
+		private void Awake()
+		{
+			SpriteRendererComponent = GetComponentInChildren<SpriteRenderer>();
+			SpriteAnimatorComponent = GetComponentInChildren<Animator>();
+		}
 
-	private void Start()
-	{
-		// calling in start to ensure that the EnemyManager is initialized
-		EnemyManager.Instance.AddEnemy(this);
-	}
+		private void Start()
+		{
+			// calling in start to ensure that the EnemyManager is initialized
+			EnemyManager.Instance.AddEnemy(this);
+		}
 
-	/*
+		/*
 	private void Update()
 	{
 		// rotate the sprite transform to face the camera
@@ -40,27 +43,27 @@ public class Enemy : MonoBehaviour
 	}
 	*/
 	
-	private void OnDestroy()
-	{
-		EnemyManager.Instance.RemoveEnemy(this);
-	}
+		private void OnDestroy()
+		{
+			EnemyManager.Instance.RemoveEnemy(this);
+		}
 	
-	#region Sprite Selection
+		#region Sprite Selection
 	
-	// pre-calculated angle ranges for sprite selection
-	private readonly List<(float, float, int)> _angleRanges = new List<(float, float, int)>
-	{
-		(-22.5f, 22.5f, 0),
-		(22.5f, 67.5f, 7),
-		(67.5f, 112.5f, 6),
-		(112.5f, 157.5f, 5),
-		(-157.5f, -112.5f, 3),
-		(-112.5f, -67.5f, 2),
-		(-67.5f, -22.5f, 1),
-		(-180f, -157.5f, 4),
-	};
+		// pre-calculated angle ranges for sprite selection
+		private readonly List<(float, float, int)> _angleRanges = new List<(float, float, int)>
+		{
+			(-22.5f, 22.5f, 0),
+			(22.5f, 67.5f, 7),
+			(67.5f, 112.5f, 6),
+			(112.5f, 157.5f, 5),
+			(-157.5f, -112.5f, 3),
+			(-112.5f, -67.5f, 2),
+			(-67.5f, -22.5f, 1),
+			(-180f, -157.5f, 4),
+		};
 	
-	/*
+		/*
 	// last returned rotation index
 	private int _lastRotationIndex = 0;
 	
@@ -89,7 +92,8 @@ public class Enemy : MonoBehaviour
 	}
 	*/
 	
-	#endregion
+		#endregion
+	}
 }
 
 public struct EnemyData
