@@ -10,7 +10,8 @@ public class WeaponManager : MonoBehaviour
 	private DoomPlayerController _owningController;
 	private ICharacterController _owningCharacter;
 	
-	public List<Weapon> weapons;
+	// public List<Weapon> weapons;
+	public List<WeaponParameters> weaponParameters;
 	[HideInInspector]
 	public Weapon currentWeapon;
 
@@ -33,7 +34,7 @@ public class WeaponManager : MonoBehaviour
 
 	private void Start()
 	{
-		currentWeapon = Instantiate(weapons[0], _weaponParent);
+		// currentWeapon = Instantiate(weapons[0], _weaponParent);
 		
 		currentWeapon.transform.parent = _weaponParent;
 		
@@ -41,19 +42,26 @@ public class WeaponManager : MonoBehaviour
 		currentWeapon.transform.localPosition += Vector3.forward * 1;
 	}
 
-	private void Update()
+	private void EquipWeapon(Weapon weapon)
 	{
-		
+		if (weapon != null)
+		{
+			currentWeapon = Instantiate(weapon, _weaponParent);
+		}
+		currentWeapon = weapon;
 	}
-
-	private void LateUpdate()
-	{
-		
-	}
-
+	
 	private void OnPlayerSpawned(ICharacterController characterRef, ICameraController cameraRef)
 	{
-		Debug.Log($"{GetType()}: Player Spawned");
 		_weaponParent = cameraRef.CameraTransform;
 	}
+}
+
+[Serializable]
+public struct WeaponParameters
+{
+	public Weapon weapon;
+	public Vector3 offset;
+	public int ammo;
+	public int maxAmmo;
 }

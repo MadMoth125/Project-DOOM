@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ProjectDOOM.Weapons.V2
 {
-	public class Pistol : Weapon
+	public class Shotgun : Weapon
 	{
 		[Space(10)]
 		[SerializeField]

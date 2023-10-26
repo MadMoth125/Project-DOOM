@@ -13,7 +13,7 @@ namespace ProjectDOOM.Weapons.StateMachine
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            eventHandler = animator.gameObject.SearchForComponent<IWeaponEventHandler>();
+            eventHandler = animator.GetComponent<IWeaponEventHandler>();
         }
     }
 }

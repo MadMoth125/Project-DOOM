@@ -14,7 +14,7 @@ namespace Utilities
 			return component == null ? gameObject.AddComponent<T>() : component;
 		}
 	
-		public static T SearchForComponent<T>(this GameObject gameObject)
+		public static T SearchForComponent<T>(this GameObject gameObject) where T : Component
 		{
 			T component = gameObject.GetComponent<T>();
 
