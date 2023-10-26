@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class FallbackCameraController : MonoBehaviour, ICameraController
 {
+	public ICharacterController OwningController { get; }
+	
 	public Camera CameraComponent => _camera;
 	private Camera _camera;
 	
-	public ICharacterController OwningController { get; }
 	public Transform CameraTransform => transform;
 	public GameObject CameraGameObject => gameObject;
 	
