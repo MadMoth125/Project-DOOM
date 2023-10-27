@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class DoomPlayerController : MonoBehaviour
 {
-	// public static event Action OnPlayerSpawned;
+	public static event Action<ICharacterController, ICameraController> OnPlayerSpawned;
 	
 	// saving names for required input axis
 	private const string Horizontal = "Horizontal";
@@ -46,6 +46,8 @@ public class DoomPlayerController : MonoBehaviour
 	{
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
+		
+		OnPlayerSpawned?.Invoke(_characterReference, _cameraReference);
 	}
 
 	private void Update()
@@ -91,7 +93,7 @@ public class DoomPlayerController : MonoBehaviour
 		}
 		
 		_cameraReference.SetFollowTransform(_characterReference.CameraTransform);
-
+		
 		return true;
 	}
 }

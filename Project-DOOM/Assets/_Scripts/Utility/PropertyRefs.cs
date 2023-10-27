@@ -9,6 +9,7 @@ namespace Utilities
     {
         public static readonly int RotationIndexPropertyHash = Animator.StringToHash("Rotation Index");
         public static readonly int IsMovingPropertyHash = Animator.StringToHash("Is Moving");
+        
         public static readonly string PlayerTag = "Player";
     }
 }
