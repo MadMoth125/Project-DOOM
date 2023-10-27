@@ -10,34 +10,33 @@ namespace ProjectDOOM.Weapons.V2
 	public class Pistol : Weapon
 	{
 		[Space(10)]
-		[SerializeField]
-		protected SerializableInterface<IWeaponEventHandler> eventHandler;
-		
-		[Space(10)]
 		public HitScanFireMethod fireMethod = new HitScanFireMethod();
 		
 		protected override void Awake()
 		{
 			base.Awake();
-			eventHandler.Value.SetWeaponComponent(this);
+			eventHandler.SetWeaponComponent(this);
 		}
 
 		protected override void Update()
 		{
-			fireConditionals[0] = eventHandler.Value.CanFire;
 			base.Update();
 		}
 
 		protected override void FireWeapon()
 		{
+			// set the origin and direction of the projectile
 			fireMethod.origin = transform.position;
 			fireMethod.direction = transform.forward;
 			
+			// fire the projectile
 			fireMethod.Fire();
-
-			InvokeFireConditionMet();
 			
-			// fireMethod.HitResults.collider.GetComponent<IDamageable>()?.TakeDamage(damage);
+			// reduce ammo
+			ammo--;
+			
+			// invoke the event
+			InvokeFireConditionMet();
 		}
 	}
 }

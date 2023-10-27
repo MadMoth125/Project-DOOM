@@ -96,5 +96,4 @@ namespace MinaPechuex.BehaviorTree
             return false;
         }
     }
-
 }

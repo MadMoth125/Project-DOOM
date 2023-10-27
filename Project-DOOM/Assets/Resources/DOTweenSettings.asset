@@ -15,7 +15,7 @@ MonoBehaviour:
   useSafeMode: 1
   safeModeOptions:
     logBehaviour: 2
-    nestedTweenFailureBehaviour: 0
+    nestedTweenFailureBehaviour: 1
   timeScale: 1
   unscaledTimeScale: 1
   useSmoothDeltaTime: 0
@@ -40,8 +40,8 @@ MonoBehaviour:
   modules:
     showPanel: 0
     audioEnabled: 1
-    physicsEnabled: 1
-    physics2DEnabled: 1
+    physicsEnabled: 0
+    physics2DEnabled: 0
     spriteEnabled: 1
     uiEnabled: 1
     textMeshProEnabled: 0

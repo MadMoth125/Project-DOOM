@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ProjectDOOM.Weapons.Interfaces;
+using TNRD;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.PlayerLoop;
 
 namespace ProjectDOOM.Weapons.V2
 {
@@ -20,22 +21,31 @@ namespace ProjectDOOM.Weapons.V2
 		/// </summary>
 		public event Action OnFireConditionMet;
 		
+		protected IWeaponEventHandler eventHandler;
+		
 		[Header("Weapon Parameters")]
 		public TriggerType triggerType;
 		public ConditionalTrigger triggerMethod;
 		
-		public int damage;
-		public int maxAmmo;
-		
 		[HideInInspector]
 		public int ammo;
+		public int maxAmmo;
+		public int damage;
+		
+		public bool CanPickupAmmo => ammo < maxAmmo;
+		public bool CanFire => ammo > 0;
+
 		[HideInInspector]
 		// An array of booleans that are looped through when the fire input
 		// is pressed. If all of the conditions are met, the weapon will fire.
-		public bool[] fireConditionals = new bool[] { true };
-
+		public bool[] fireConditionals;
+		
 		protected virtual void Awake()
 		{
+			fireConditionals = new bool[] { true, true };
+			
+			eventHandler = GetComponentInChildren<IWeaponEventHandler>();
+			
 			switch (triggerType)
 			{
 				case TriggerType.Single:
@@ -45,12 +55,15 @@ namespace ProjectDOOM.Weapons.V2
 					triggerMethod = new AutomaticTrigger();
 					break;
 				default:
-					throw new ArgumentOutOfRangeException();
+					break;
 			}
 		}
 
 		protected virtual void Update()
 		{
+			fireConditionals[0] = eventHandler.CanFire; // is anim finished
+			fireConditionals[1] = CanFire; // do we have ammo
+			
 			triggerMethod.ShouldFire(FireWeapon, fireConditionals);
 		}
 
@@ -64,6 +77,27 @@ namespace ProjectDOOM.Weapons.V2
 			OnFireConditionMet?.Invoke();
 			onFire?.Invoke();
 		}
+		
+		public virtual void AddAmmo(int amount)
+		{
+			ammo = Mathf.Clamp(ammo + amount, 0, maxAmmo);
+		}
+		
+		public virtual void AddAmmo(int amount, out int overflow)
+		{
+			// if the ammo + amount is greater than the max ammo, set the remaining ammo to the difference
+			if (ammo + amount > maxAmmo)
+			{
+				overflow = ammo + amount - maxAmmo;
+			}
+			else
+			{
+				overflow = 0;
+			}
+			
+			ammo = Mathf.Clamp(ammo + amount, 0, maxAmmo);
+		}
+		
 	}
 
 	public enum FireType
