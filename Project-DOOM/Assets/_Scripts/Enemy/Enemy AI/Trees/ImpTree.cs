@@ -23,9 +23,9 @@ public class ImpTree : NodeTree
 		_startingPosition = transform.position;
 		
 		// initialize tasks so save on performance (slightly)
-		_taskWander = new TaskWander(_navAgentComponent, _startingPosition, 8f, 3f, 6f);
-		_taskDetectTarget = new TaskDetectTarget(transform, 50f);
-		_taskChaseTarget = new TaskChaseTarget(_navAgentComponent, transform, 80f);
+		_taskWander = new TaskWander(_navAgentComponent, _startingPosition, 16f, 3f, 6f);
+		_taskDetectTarget = new TaskDetectTarget(transform, 20f);
+		_taskChaseTarget = new TaskChaseTarget(_navAgentComponent, transform, 35f);
 	}
 
 	protected override Node SetupTree()
