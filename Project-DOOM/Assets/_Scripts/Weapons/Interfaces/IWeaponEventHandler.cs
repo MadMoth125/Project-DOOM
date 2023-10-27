@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ProjectDOOM.Weapons.V2;
 using UnityEngine;
 
 namespace ProjectDOOM.Weapons.Interfaces
@@ -9,7 +10,7 @@ namespace ProjectDOOM.Weapons.Interfaces
     {
         public bool CanFire { get; }
 
-        public void SetWeaponComponent(Weapon weapon);
+        public void SetWeaponComponent(IWeapon weapon);
         public void EnableWeapon();
         public void DisableWeapon();
     }
