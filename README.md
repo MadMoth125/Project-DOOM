@@ -7,9 +7,9 @@ The project is currently incomplete, as it only includes:
 * Interactable doors.
 * A single enemy type.
 * Simple enemy pathfinding.
-* Handful of weapons.
+* Handful of weapons. (No damage system)
 
 # Goals
-* To recreate the mechanics found in DOOM using the tools provided in Unity.
-* To enhance the visuals by adding PBR properties to common textures.
-* To experiment with [Unity's Job system](https://docs.unity3d.com/Manual/JobSystem.html) for multi-threading certain scripts.
+* Recreate the mechanics found in DOOM using the tools provided in Unity.
+* Enhance the visuals by adding PBR properties to common textures.
+* Experiment with [Unity's Job system](https://docs.unity3d.com/Manual/JobSystem.html) for multi-threading certain scripts.
